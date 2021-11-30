@@ -9,8 +9,6 @@
     "build": "cross-env BUILD=production rollup -c",
     "watch": "rollup -c -w",
     "pretest": "rollup -c",
-    "test": "nyc mocha",
-    "prepublish": "cross-env BUILD=production npm test",
     "doc": "docsify serve docs",
     "release": "release-it"
   },
@@ -33,9 +31,6 @@
     "url": "https://github.com/lpreterite/vue-tinymce/issues"
   },
   "homepage": "https://github.com/lpreterite/vue-tinymce#readme",
-  "dependencies": {
-    "tinymce": "^5.0.6"
-  },
   "peerDependencies": {
     "tinymce": "^5.0.6",
     "vue": "^3.0.0"
