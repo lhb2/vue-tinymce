@@ -4,8 +4,8 @@
 # vue-tinymce
 
 [![npm version](https://img.shields.io/npm/v/@packy-tang/vue-tinymce.svg)](https://www.npmjs.com/package/@packy-tang/vue-tinymce)
-![vue](https://img.shields.io/github/package-json/dependency-version/lpreterite/vue-tinymce/vue)
-![tinymce](https://img.shields.io/github/package-json/dependency-version/lpreterite/vue-tinymce/tinymce)
+![vue](https://img.shields.io/npm/dependency-version/@packy-tang/vue-tinymce/peer/vue)
+![tinymce](https://img.shields.io/npm/dependency-version/@packy-tang/vue-tinymce/peer/tinymce)
 [![NPM downloads](http://img.shields.io/npm/dm/@packy-tang/vue-tinymce.svg)](https://www.npmjs.com/package/@packy-tang/vue-tinymce)
 
 > 已支持**vue3**。`npm i @packy-tang/vue-tinymce@next` 就可使用vue3版本支持。
