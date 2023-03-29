@@ -16,4 +16,14 @@ class VuePlugin{
         });
     }
 }
+export function loadTinymce(url) {
+    var js = document.createElement('script')
+    js.src = url
+    js.defer = true
+    js.onload = function() {
+      document.dispatchEvent(new Event('tinymce'))
+    }
+  
+    document.body.appendChild(js)
+}
 export default new VuePlugin()

@@ -48,11 +48,8 @@ export default {
         },
         debug: Boolean
     },
-    render(){
-        if(typeof tinymce === "undefined"){
-            return h('div', "tinymce is undefined"); 
-        }
-        return h('div', {
+    render(createElement){
+        return createElement('div', {
             attrs: {
                 id: this.id
             }
@@ -80,41 +77,17 @@ export default {
     },
     created(){
         this.changedLog = changedLog(this.debug)
-        if(typeof tinymce === "undefined") throw new Error('tinymce undefined');
-    },
-    beforeMount () {
-        const setting = Object.assign({},
-            this.setting,
-            {
-                selector: '#'+this.id,
-                setup: (editor)=> {
-                    this.setup(editor);
-                    // console.log('setup');
-                    editor.on('init', ()=>{
-                        // console.log('init', this.content);
-                        this.setContent(this.content, editor)
-                        editor.on('keyup input', e=>{ //只在编辑器中打字才会触发
-                            this.status = INPUT       //编辑器录入文字时标记为`INPUT`状态
-                        })
-                        editor.on('SetContent', e=>{ //编辑器在插入图片和撤销/重做时触发，组件content更新数据也会导致触发
-                            this.changedLog(e, this.status, editor.getContent(), "--")
-                        })
-                        editor.on('Blur', e=>{
-                            this.status = INIT
-                            this.changedLog(e, this.status, editor.getContent(), "--")
-                        })
-                        editor.on('input keyup Change Undo Redo ExecCommand NodeChange', e=>{
-                            this.onChanged(e, editor)
-                        })
-                    });
-                }
-            }
-        );
-        this.editor = tinymce.createEditor(setting.selector, setting)
     },
     mounted(){
-        this.editor.targetElm = this.$el
-        this.editor.render()
+        if (typeof tinymce === 'undefined') {
+            var onload = () => {
+                document.removeEventListener('tinymce', onload)
+                this.initEditor()
+            }
+            document.addEventListener('tinymce', onload)
+        } else {
+            this.initEditor()
+        }
     },
     updated () {
         this.editor.render()
@@ -141,7 +114,40 @@ export default {
             const content = editor.getContent()
             this.changedLog(e, this.status, content, "--")
             this.$emit('change', content);
+        },
+        initEditor() {
+            const setting = Object.assign({},
+            this.setting,
+            {
+                selector: '#' + this.id,
+                setup: (editor) => {
+                    this.setup(editor)
+                    // console.log('setup');
+                    editor.on('init', () => {
+                    // console.log('init', this.content);
+                    this.setContent(this.content, editor)
+                    editor.on('keyup input', e => { // 只在编辑器中打字才会触发
+                        this.status = INPUT // 编辑器录入文字时标记为`INPUT`状态
+                    })
+                    editor.on('SetContent', e => { // 编辑器在插入图片和撤销/重做时触发，组件content更新数据也会导致触发
+                        this.changedLog(e, this.status, editor.getContent(), '--')
+                    })
+                    editor.on('Blur', e => {
+                        this.status = INIT
+                        this.changedLog(e, this.status, editor.getContent(), '--')
+                    })
+                    editor.on('input keyup Change Undo Redo ExecCommand NodeChange', e => {
+                        this.onChanged(e, editor)
+                    })
+                    })
+                }
+            }
+            )
+            this.editor = window.tinymce.createEditor(setting.selector, setting)
+            this.editor.targetElm = this.$el
+            this.editor.render()
         }
+
     }
 }
 </script>

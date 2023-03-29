@@ -3,35 +3,33 @@
 
 # vue-tinymce
 
-[![npm version](https://img.shields.io/npm/v/@packy-tang/vue-tinymce.svg)](https://www.npmjs.com/package/@packy-tang/vue-tinymce)
-![vue](https://img.shields.io/npm/dependency-version/@packy-tang/vue-tinymce/peer/vue)
-![tinymce](https://img.shields.io/npm/dependency-version/@packy-tang/vue-tinymce/peer/tinymce)
-[![NPM downloads](http://img.shields.io/npm/dm/@packy-tang/vue-tinymce.svg)](https://www.npmjs.com/package/@packy-tang/vue-tinymce)
+[![npm version](https://img.shields.io/npm/v/@lhb2/vue-tinymce.svg)](https://www.npmjs.com/package/@lhb2/vue-tinymce)
+![vue](https://img.shields.io/npm/dependency-version/@lhb2/vue-tinymce/peer/vue)
+![tinymce](https://img.shields.io/npm/dependency-version/@lhb2/vue-tinymce/peer/tinymce)
+[![NPM downloads](http://img.shields.io/npm/dm/@lhb2/vue-tinymce.svg)](https://www.npmjs.com/package/@lhb2/vue-tinymce)
 
-提供给 vue 开发者使用的 TinyMCE 组件
+TinyMCE 的vue组件，提供异步加载TinyMCE脚本的功能。
 
 ## 目的
 
-> 已支持**vue3**。`npm i @packy-tang/vue-tinymce@next` 就可使用vue3版本支持。
+> 由于没有vue3的环境，目前只确认vue2没有问题。
 
-为开发人员简单使用 TinyMCE 的 Vue 组件。提供非常简单易懂的源代码提供给开发人员作为参考，当然你也可以直接使用这个组件到你的项目。发现问题可以提到 issue，期望你的反馈 👏。
+TinyMCE 的 Vue 组件，是@packy-tang/vue-tinymce的分支，兼容@packy-tang/vue-tinymce，另外提供异步加载TinyMCE脚本的功能，TinyMCE的脚本(tinymce.min.js)有388k左右，原版是同步加载，影响首页的加载速度，改成异步加载后可以加快首页响应的速度。同时也支持原有的加载方法。
 
 ## 如何使用
 
 ### 安装组件
 
 ```sh
-yarn add @packy-tang/vue-tinymce
+yarn add @lhb2/vue-tinymce
 # or
-npm install @packy-tang/vue-tinymce
+npm install @lhb2/vue-tinymce
 ```
 
-### 引入
+### 异步加载TinyMCE脚本的方法（同步加载请参考@packy-tang/vue-tinymce）
 
 ```html
 <template>
-    <!-- 全局引入TinyMCE -->
-    <script src="//unpkg.com/tinymce@5.1.5/tinymce.min.js"></script>
     <!-- App -->
     <div id="app">
         <vue-tinymce
@@ -42,7 +40,11 @@ npm install @packy-tang/vue-tinymce
 </template>
 <script>
     import Vue from "vue"
-    import VueTinymce from "@packy-tang/vue-tinymce"
+    import VueTinymce from "@lhb2/vue-tinymce"
+
+    // 异步加载TinyMCE，如果使用vue-cli，需要放在main.js中
+    import { loadTinymce } from '@lhb2/vue-tinymce'
+    loadTinymce('//unpkg.com/tinymce@5.1.5/tinymce.min.js')
 
     //安装组件
     Vue.use(VueTinymce)
@@ -66,13 +68,13 @@ npm install @packy-tang/vue-tinymce
 </script>
 ```
 
-### 其他使用例子
+### 其他使用例子（参考@packy-tang/vue-tinymce）
 
 - vue-cli使用例子：[传送门](https://github.com/lpreterite/vue-tinymce-example/tree/master/vue)
 - webpack使用例子：传送门(待补上)
 
 
-## 属性
+## 属性（参考@packy-tang/vue-tinymce）
 
 | 名称       | 描述                                                  |
 | ---------- | ----------------------------------------------------- |
